@@ -16,13 +16,11 @@ class MakeList extends StatelessWidget {
             return const Divider(thickness: 2.0,);
           }
           else if (i < MyNotes.notes.length){
-            return Container(
-              child: ListTile(
+            return ListTile(
                 leading: Text(MyNotes.notes[i~/2].noteNumber.toString()),
                 title: Text(MyNotes.notes[i~/2].noteName),
                 subtitle: Text(MyNotes.notes[i~/2].noteName.substring(0, 10) + "..."),
-              )
-            );
+              );
           }
           else{
             return const Divider(thickness: 2.0,);
