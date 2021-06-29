@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsApp.debugAllowBannerOverride = false;
     return MaterialApp(
+      routes: <String, WidgetBuilder> {
+      '/a': (BuildContext context) => MyNotes(),
+      '/b': (BuildContext context) => AddNotesPage(),
+      },
       title: 'app tab',
       theme: ThemeData(
         primarySwatch: Colors.blue,

@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/mynotes.dart';
-
+/*
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+  Not in use rn, copied important part to MyNotes
+*/
 class MakeList extends StatelessWidget {
   const MakeList({ Key? key}) : super(key: key);
 
@@ -11,6 +25,7 @@ class MakeList extends StatelessWidget {
     }
     else{
       return ListView.builder(
+        itemCount: MyNotes.notes.length,
         itemBuilder: (context, i){
           if (i.isOdd){
             return const Divider(thickness: 2.0,);

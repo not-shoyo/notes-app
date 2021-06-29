@@ -6,6 +6,7 @@ class Note {
 
   Note(this.noteName){
     noteNumber = ++numberOfNotes;
+    print(noteNumber.toString() + " is created");
   }
 
   void setNoteContent(String content){

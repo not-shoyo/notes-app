@@ -19,13 +19,26 @@ class _MyNotesState extends State<MyNotes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("notes with numbers"),
+        title: Text(MyNotes.notes.length.toString()),
       ),
-      body: MakeList(),
+      body: ListView.builder(
+        itemCount: Note.numberOfNotes * 2, 
+        itemBuilder: (context, i) {
+          if (i.isOdd){
+            return const Divider(thickness: 2.0,);
+          }
+          print("creating list tile");
+          return ListTile(
+            leading: Text(MyNotes.notes[i~/2].noteNumber.toString()),
+            title: Text(MyNotes.notes[i~/2].noteName),
+            subtitle: Text(MyNotes.notes[i~/2].noteContent.substring(0, 10) + "..."),
+          );
+        }
+      ),
       floatingActionButton:IconButton(
         tooltip: "Add Note",
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddNotesPage()));
+          Navigator.pushNamed(context, '/b');
         },
         icon: const Icon(Icons.note_add)
         )

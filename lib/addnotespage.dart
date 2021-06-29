@@ -72,17 +72,26 @@ class _AddNotesPageState extends State<AddNotesPage> {
 
   void _saveClicked(){
     if (MyNotes.notes.isNotEmpty){
-      int n = MyNotes.notes.length;
+      print("isnotempty");
+      int n = MyNotes.notes.length + 1;
       MyNotes.notes.add(Note("note $n"));
+      print("last note in the list: " + MyNotes.notes[Note.numberOfNotes-1].noteName);
     }
     else{
+      print("isempty");
       MyNotes.notes.add(Note("note 1"));
+      print("last note in the list: " + MyNotes.notes[Note.numberOfNotes-1].noteName);
     }
     MyNotes.notes.last.setNoteContent(_noteController.text);
+    /*while (Navigator.canPop(context)){
+      Navigator.pop(context);
+    }*/
     Navigator.pop(context);
+    Navigator.pushNamed(context, '/a');
   }
 
   void _backButtonClicked(){
     Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const MyNotes()));
   }
 }
