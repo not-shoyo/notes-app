@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/mynotes.dart';
+
+import 'pages/mynotes.dart';
 /*
   Not in use rn, copied important part to MyNotes
   Not in use rn, copied important part to MyNotes
