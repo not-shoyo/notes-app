@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/mynotes.dart';
+import 'pages/mynotespage.dart';
 /*
   Not in use rn, copied important part to MyNotes
   Not in use rn, copied important part to MyNotes
@@ -21,21 +21,21 @@ class MakeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (MyNotes.notes.isEmpty){
+    if (MyNotesPage.notes.isEmpty){
       return Container();
     }
     else{
       return ListView.builder(
-        itemCount: MyNotes.notes.length,
+        itemCount: MyNotesPage.notes.length,
         itemBuilder: (context, i){
           if (i.isOdd){
             return const Divider(thickness: 2.0,);
           }
-          else if (i < MyNotes.notes.length){
+          else if (i < MyNotesPage.notes.length){
             return ListTile(
-                leading: Text(MyNotes.notes[i~/2].noteNumber.toString()),
-                title: Text(MyNotes.notes[i~/2].noteName),
-                subtitle: Text(MyNotes.notes[i~/2].noteName.substring(0, 10) + "..."),
+                leading: Text(MyNotesPage.notes[i~/2].noteNumber.toString()),
+                title: Text(MyNotesPage.notes[i~/2].noteName),
+                subtitle: Text(MyNotesPage.notes[i~/2].noteName.substring(0, 10) + "..."),
               );
           }
           else{

@@ -1,18 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/model/note.dart';
 
-class MyNotes extends StatefulWidget {
+class MyNotesPage extends StatefulWidget {
 
   static List<Note> notes = [];
+  static Note noteToDisplay = Note("");
 
-  const MyNotes({ Key? key }) : super(key: key);
+  const MyNotesPage({ Key? key }) : super(key: key);
 
   @override
-  _MyNotesState createState() => _MyNotesState();
+  _MyNotesPageState createState() => _MyNotesPageState();
 }
 
-class _MyNotesState extends State<MyNotes> {
+class _MyNotesPageState extends State<MyNotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,21 +33,23 @@ class _MyNotesState extends State<MyNotes> {
           return ListTile(
             leading: Padding(
               padding: const EdgeInsets.symmetric(vertical: 17.0, horizontal: 15.0),
-              child: Text(MyNotes.notes[i~/2].noteNumber.toString()),
+              child: Text(MyNotesPage.notes[i~/2].noteNumber.toString()),
             ),
-            title: Text(MyNotes.notes[i~/2].noteName),
-            subtitle: Text(MyNotes.notes[i~/2].noteContent.substring(0, (MyNotes.notes[i~/2].noteContent.length > 10) ? 10 : MyNotes.notes[i~/2].noteContent.length) + "..."),
+            title: Text(MyNotesPage.notes[i~/2].noteName),
+            subtitle: Text(MyNotesPage.notes[i~/2].noteContent.substring(0, (MyNotesPage.notes[i~/2].noteContent.length > 10) ? 10 : MyNotesPage.notes[i~/2].noteContent.length) + "..."),
             // hoverColor: Colors.lightBlue[500],
             hoverColor: Colors.grey[200],
             onTap: (){
               print("List tile tapped");
+              MyNotesPage.noteToDisplay = MyNotesPage.notes[i~/2];
+              Navigator.pushReplacementNamed(context, "/displaynotepage");
             },
           );
         }
       ),
       floatingActionButton:IconButton(
         onPressed: () {
-          Navigator.pushReplacementNamed(context, "/addnotespage");
+          Navigator.pushReplacementNamed(context, "/addnotepage");
         },
         icon: const Icon(Icons.note_add),
         tooltip: "Add Note",

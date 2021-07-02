@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'pages/addnotespage.dart';
-import 'pages/mynotes.dart';
+import 'pages/displaynotepage.dart';
+import 'pages/editnotepage.dart';
+import 'pages/addnotepage.dart';
+import 'pages/mynotespage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,14 +18,16 @@ class MyApp extends StatelessWidget {
     WidgetsApp.debugAllowBannerOverride = false;
     return MaterialApp(
       routes: <String, WidgetBuilder> {
-      '/mynotes': (BuildContext context) => const MyNotes(),
-      '/addnotespage': (BuildContext context) => const AddNotesPage(),
+      '/mynotespage': (BuildContext context) => const MyNotesPage(),
+      '/addnotepage': (BuildContext context) => const AddNotePage(),
+      '/displaynotepage': (BuildContext context) => DisplayNotePage(),
+      '/editnotepage':(BuildContext context) => EditNotePage(),
       },
       title: 'app tab',
       theme: ThemeData(
         primaryColor: Colors.white,
       ),
-      home: const MyNotes(),
+      home: const MyNotesPage(),
     );
   }
 }

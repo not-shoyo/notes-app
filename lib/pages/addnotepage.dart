@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/model/note.dart';
 
-import 'mynotes.dart';
+import 'mynotespage.dart';
 
 /*Making an addnotespage where user will write their note
 * once they finish we will set it to the content of that note in notes[i]
 * need to change lots of stuff here because copied from internet of how to get input*/
 
-class AddNotesPage extends StatefulWidget {
+class AddNotePage extends StatefulWidget {
 
-  const AddNotesPage({Key? key}) : super(key: key);
+  const AddNotePage({Key? key}) : super(key: key);
 
   @override
-  State<AddNotesPage> createState() => _AddNotesPageState();
+  State<AddNotePage> createState() => _AddNotePageState();
 }
 
 /// This is the private State class that goes with AddNotesPage.
-class _AddNotesPageState extends State<AddNotesPage> {
+class _AddNotePageState extends State<AddNotePage> {
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
 
@@ -39,7 +39,7 @@ class _AddNotesPageState extends State<AddNotesPage> {
             tooltip: "Notes Page",
             icon: const Icon(Icons.notes, color: Colors.black,),
             onPressed: () {
-              Navigator.pushReplacementNamed(context, "/mynotes");
+              Navigator.pushReplacementNamed(context, "/mynotespage");
             },
           ),
           trailing: IconButton(
@@ -82,9 +82,9 @@ class _AddNotesPageState extends State<AddNotesPage> {
 
   void _saveClicked(){
     if (_noteController.text != "" && _titleController.text != ""){
-      MyNotes.notes.add(Note(_titleController.text));
-      MyNotes.notes.last.setNoteContent(_noteController.text);
-      Navigator.pushReplacementNamed(context, "/mynotes");
+      MyNotesPage.notes.add(Note(_titleController.text));
+      MyNotesPage.notes.last.setNoteContent(_noteController.text);
+      Navigator.pushReplacementNamed(context, "/mynotespage");
     }
     else {
       print("Empty Fields");

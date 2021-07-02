@@ -1,4 +1,5 @@
 class Note {
+
   String noteName = "";
   String noteContent = "";
   int noteNumber = 0;
