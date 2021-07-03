@@ -17,5 +17,13 @@ class Note {
   void setNoteContent(String content){
     noteContent = content;
   }
+
+  bool hasTitle(){
+    return this.noteName != "";
+  }
+
+  bool hasContent(){
+    return this.noteContent != "";
+  }
 }
 

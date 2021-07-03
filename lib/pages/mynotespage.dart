@@ -16,7 +16,6 @@ class _MyNotesPageState extends State<MyNotesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.lightBlue[300],
       backgroundColor: Colors.white12,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -35,8 +34,8 @@ class _MyNotesPageState extends State<MyNotesPage> {
               padding: const EdgeInsets.symmetric(vertical: 17.0, horizontal: 15.0),
               child: Text(MyNotesPage.notes.elementAt(i~/2).noteNumber.toString()),
             ),
-            title: Text(MyNotesPage.notes.elementAt(i~/2).noteName),
-            subtitle: Text(MyNotesPage.notes.elementAt(i~/2).noteContent.substring(0, (MyNotesPage.notes.elementAt(i~/2).noteContent.length > 10) ? 10 : MyNotesPage.notes.elementAt(i~/2).noteContent.length) + "..."),
+            title: Text(MyNotesPage.notes.elementAt(i~/2).hasTitle() ? MyNotesPage.notes.elementAt(i~/2).noteName : "New Note"),
+            subtitle: Text(MyNotesPage.notes.elementAt(i~/2).hasContent() ? MyNotesPage.notes.elementAt(i~/2).noteContent.substring(0, (MyNotesPage.notes.elementAt(i~/2).noteContent.length > 10) ? 10 : MyNotesPage.notes.elementAt(i~/2).noteContent.length) + "..." : "No Content"),
             hoverColor: Colors.grey[200],
             onTap: (){
               print("List tile tapped");

@@ -3,10 +3,6 @@ import 'package:flutter_application_2/model/note.dart';
 
 import 'mynotespage.dart';
 
-/*Making an addnotespage where user will write their note
-* once they finish we will set it to the content of that note in notes[i]
-* need to change lots of stuff here because copied from internet of how to get input*/
-
 class AddNotePage extends StatefulWidget {
 
   const AddNotePage({Key? key}) : super(key: key);
@@ -49,7 +45,7 @@ class _AddNotePageState extends State<AddNotePage> {
             ),
           title: TextField(
             textAlign: TextAlign.center,
-            decoration: const InputDecoration(                        //making the hint and input come in the middle
+            decoration: const InputDecoration(
               hintText: "title",
               hintStyle: TextStyle(
                 color: Colors.black54,
@@ -102,12 +98,6 @@ class _AddNotePageState extends State<AddNotePage> {
     else {
       MyNotesPage.notes.add(Note(_titleController.text));
       MyNotesPage.notes.last.setNoteContent(_noteController.text);
-      if (_titleController.text == ""){
-        MyNotesPage.notes.last.setNoteTitle("New Note");
-      }
-      else if (_noteController.text == ""){
-        MyNotesPage.notes.last.setNoteContent("No content");
-      }
       Navigator.pushReplacementNamed(context, "/mynotespage");
     }
   }

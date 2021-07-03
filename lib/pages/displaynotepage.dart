@@ -30,7 +30,7 @@ class DisplayNotePage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
         child: Text(
-          MyNotesPage.noteToDisplay.noteName + "\n\n" + MyNotesPage.noteToDisplay.noteContent,
+          (MyNotesPage.noteToDisplay.hasTitle() ? MyNotesPage.noteToDisplay.noteName : "") + "\n\n" + (MyNotesPage.noteToDisplay.hasContent() ? MyNotesPage.noteToDisplay.noteContent : ""),
           textAlign: TextAlign.left,
           ),
         ),

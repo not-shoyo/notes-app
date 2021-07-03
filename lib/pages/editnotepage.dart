@@ -12,8 +12,8 @@ class EditNotePage extends StatefulWidget {
 
 class _EditNotePageState extends State<EditNotePage> {
 
-  final TextEditingController _contentEditingController = TextEditingController(text: MyNotesPage.noteToDisplay.noteContent);
-  final TextEditingController _titleEditingController = TextEditingController(text: MyNotesPage.noteToDisplay.noteName);
+  final TextEditingController _contentEditingController = TextEditingController(text: MyNotesPage.noteToDisplay.hasContent() ? MyNotesPage.noteToDisplay.noteContent : "");
+  final TextEditingController _titleEditingController = TextEditingController(text: MyNotesPage.noteToDisplay.hasTitle() ? MyNotesPage.noteToDisplay.noteName : "");
 
   @override
   void dispose() {
@@ -64,7 +64,7 @@ class _EditNotePageState extends State<EditNotePage> {
               );
             }, 
             icon: const Icon(Icons.note_rounded, color: Colors.blue,), 
-            tooltip: "View Original Note", //const Text("View Original Note", style: TextStyle(color: Colors.blue),),
+            tooltip: "View Original Note",
           ),
           title: TextField(
             maxLines: 1,
@@ -73,6 +73,10 @@ class _EditNotePageState extends State<EditNotePage> {
             style: const TextStyle(fontSize: 14, color: Colors.black),
             controller: _titleEditingController,
             decoration: const InputDecoration(
+              hintText: "title",
+              hintStyle: TextStyle(
+                color: Colors.black54,
+              ),
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
@@ -92,11 +96,7 @@ class _EditNotePageState extends State<EditNotePage> {
                           ),
                           ListTile(
                             leading: TextButton(
-                              onPressed: () {
-                                MyNotesPage.noteToDisplay.setNoteTitle(_titleEditingController.text);
-                                MyNotesPage.noteToDisplay.setNoteContent(_contentEditingController.text);
-                                Navigator.pushReplacementNamed(context, "/displaynotepage");
-                              },
+                              onPressed: _saveClicked,
                               child: const Text("Yes")
                             ),
                             trailing: TextButton(
@@ -113,7 +113,7 @@ class _EditNotePageState extends State<EditNotePage> {
                 });
             },
             icon: const Icon(Icons.save, color: Colors.blue,),
-            tooltip: "Save", //const Text("Save", style: TextStyle(color: Colors.blue),),
+            tooltip: "Save",
             ),
         ),
         bottomOpacity: 0.0,
@@ -134,4 +134,32 @@ class _EditNotePageState extends State<EditNotePage> {
         ),
     );
   }
+
+  void _saveClicked(){
+    if (_contentEditingController.text == "" && _titleEditingController.text == ""){
+      showDialog(
+        context: context, 
+        builder: (BuildContext context) {
+          bool manuallyClosed = false;
+          Future.delayed(const Duration(seconds: 1)).then((_) {
+            if (!manuallyClosed) {
+              Navigator.of(context).pop();
+            }
+          });
+          Navigator.pop(context);
+          return const AlertDialog(
+            title: Center(
+              child: Text("Cannot save a note with no name and no content"),
+            ),
+          );
+        }
+      );
+    }
+    else {
+      MyNotesPage.noteToDisplay.setNoteTitle(_titleEditingController.text);
+      MyNotesPage.noteToDisplay.setNoteContent(_contentEditingController.text);
+      Navigator.pushReplacementNamed(context, "/displaynotepage");
+    }
+  }
+
 }
