@@ -9,12 +9,21 @@ class DisplayNotePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: TextButton.icon(
-          onPressed: (){
-            Navigator.pushReplacementNamed(context, "/mynotespage");
-          }, 
-          icon: const Icon(Icons.notes, color: Colors.blue,), 
-          label: const Text("Back to notes"),
+        title: ListTile(
+          leading: TextButton.icon(
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, "/mynotespage");
+            }, 
+            icon: const Icon(Icons.notes, color: Colors.blue,), 
+            label: const Text("Back to Notes"),
+          ),
+          trailing: TextButton.icon(
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, "/editnotepage");
+            }, 
+            icon: const Icon(Icons.mode_edit_outlined, color: Colors.blue,), 
+            label: const Text("Edit Note"),
+          ),
         ),
         bottomOpacity: 0.0,
       ),

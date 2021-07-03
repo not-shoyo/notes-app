@@ -3,7 +3,7 @@ import 'package:flutter_application_2/model/note.dart';
 
 class MyNotesPage extends StatefulWidget {
 
-  static List<Note> notes = [];
+  static Set<Note> notes = {};
   static Note noteToDisplay = Note("");
 
   const MyNotesPage({ Key? key }) : super(key: key);
@@ -33,15 +33,14 @@ class _MyNotesPageState extends State<MyNotesPage> {
           return ListTile(
             leading: Padding(
               padding: const EdgeInsets.symmetric(vertical: 17.0, horizontal: 15.0),
-              child: Text(MyNotesPage.notes[i~/2].noteNumber.toString()),
+              child: Text(MyNotesPage.notes.elementAt(i~/2).noteNumber.toString()),
             ),
-            title: Text(MyNotesPage.notes[i~/2].noteName),
-            subtitle: Text(MyNotesPage.notes[i~/2].noteContent.substring(0, (MyNotesPage.notes[i~/2].noteContent.length > 10) ? 10 : MyNotesPage.notes[i~/2].noteContent.length) + "..."),
-            // hoverColor: Colors.lightBlue[500],
+            title: Text(MyNotesPage.notes.elementAt(i~/2).noteName),
+            subtitle: Text(MyNotesPage.notes.elementAt(i~/2).noteContent.substring(0, (MyNotesPage.notes.elementAt(i~/2).noteContent.length > 10) ? 10 : MyNotesPage.notes.elementAt(i~/2).noteContent.length) + "..."),
             hoverColor: Colors.grey[200],
             onTap: (){
               print("List tile tapped");
-              MyNotesPage.noteToDisplay = MyNotesPage.notes[i~/2];
+              MyNotesPage.noteToDisplay = MyNotesPage.notes.elementAt(i~/2);
               Navigator.pushReplacementNamed(context, "/displaynotepage");
             },
           );

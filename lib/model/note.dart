@@ -10,6 +10,10 @@ class Note {
     print("Note  number " + noteNumber.toString() + " is created");
   }
 
+  void setNoteTitle(String title){
+    noteName = title;
+  }
+
   void setNoteContent(String content){
     noteContent = content;
   }

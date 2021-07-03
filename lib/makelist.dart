@@ -33,9 +33,9 @@ class MakeList extends StatelessWidget {
           }
           else if (i < MyNotesPage.notes.length){
             return ListTile(
-                leading: Text(MyNotesPage.notes[i~/2].noteNumber.toString()),
-                title: Text(MyNotesPage.notes[i~/2].noteName),
-                subtitle: Text(MyNotesPage.notes[i~/2].noteName.substring(0, 10) + "..."),
+                leading: Text(MyNotesPage.notes.elementAt(i~/2).noteNumber.toString()),
+                title: Text(MyNotesPage.notes.elementAt(i~/2).noteName),
+                subtitle: Text(MyNotesPage.notes.elementAt(i~/2).noteName.substring(0, 10) + "..."),
               );
           }
           else{

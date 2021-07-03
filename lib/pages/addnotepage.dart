@@ -81,13 +81,34 @@ class _AddNotePageState extends State<AddNotePage> {
   }
 
   void _saveClicked(){
-    if (_noteController.text != "" && _titleController.text != ""){
-      MyNotesPage.notes.add(Note(_titleController.text));
-      MyNotesPage.notes.last.setNoteContent(_noteController.text);
-      Navigator.pushReplacementNamed(context, "/mynotespage");
+    if (_noteController.text == "" && _titleController.text == ""){
+      showDialog(
+        context: context, 
+        builder: (BuildContext context) {
+          bool manuallyClosed = false;
+          Future.delayed(const Duration(seconds: 1)).then((_) {
+            if (!manuallyClosed) {
+              Navigator.of(context).pop();
+            }
+          });
+          return const AlertDialog(
+            title: Center(
+              child: Text("Cannot save a note with no name and no content"),
+            ),
+          );
+        }
+      );
     }
     else {
-      print("Empty Fields");
+      MyNotesPage.notes.add(Note(_titleController.text));
+      MyNotesPage.notes.last.setNoteContent(_noteController.text);
+      if (_titleController.text == ""){
+        MyNotesPage.notes.last.setNoteTitle("New Note");
+      }
+      else if (_noteController.text == ""){
+        MyNotesPage.notes.last.setNoteContent("No content");
+      }
+      Navigator.pushReplacementNamed(context, "/mynotespage");
     }
   }
 }
