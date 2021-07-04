@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/model/note.dart';
+import 'package:flutter_application_2/model/Note.dart';
+import 'package:flutter_application_2/pages/mynotespage.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 
-import 'mynotespage.dart';
+// ignore: must_be_immutable
+class EditNotePage extends StatelessWidget {
 
-class EditNotePage extends StatefulWidget {
-  const EditNotePage({ Key? key }) : super(key: key);
+  late int n;
 
-  @override
-  _EditNotePageState createState() => _EditNotePageState();
-}
+  var notesBox = Hive.box('notes');
 
-class _EditNotePageState extends State<EditNotePage> {
+  // ignore: use_key_in_widget_constructors
+  EditNotePage(this.n, {Key ? key});
 
-  final TextEditingController _contentEditingController = TextEditingController(text: MyNotesPage.noteToDisplay.hasContent() ? MyNotesPage.noteToDisplay.noteContent : "");
-  final TextEditingController _titleEditingController = TextEditingController(text: MyNotesPage.noteToDisplay.hasTitle() ? MyNotesPage.noteToDisplay.noteName : "");
+  late TextEditingController _contentEditingController;
+  late TextEditingController _titleEditingController;
 
-  @override
+  void begin(){
+    _contentEditingController = TextEditingController(text: notesBox.get(n).hasContent() ? notesBox.get(n).noteContent : "");
+    _titleEditingController = TextEditingController(text: notesBox.get(n).hasTitle() ? notesBox.get(n).noteName : "");
+  }
+
   void dispose() {
     _titleEditingController.dispose();
     _contentEditingController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    begin();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -45,7 +51,8 @@ class _EditNotePageState extends State<EditNotePage> {
                           ListTile(
                             leading: TextButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(context, "/displaynotepage");
+                                dispose();
+                                Navigator.pushReplacementNamed(context, "/displaynotepage", arguments: n);
                               },
                               child: const Text("Yes")
                             ),
@@ -96,7 +103,7 @@ class _EditNotePageState extends State<EditNotePage> {
                           ),
                           ListTile(
                             leading: TextButton(
-                              onPressed: _saveClicked,
+                              onPressed: () {_saveClicked(context);},
                               child: const Text("Yes")
                             ),
                             trailing: TextButton(
@@ -135,7 +142,7 @@ class _EditNotePageState extends State<EditNotePage> {
     );
   }
 
-  void _saveClicked(){
+  void _saveClicked(BuildContext context){
     if (_contentEditingController.text == "" && _titleEditingController.text == ""){
       showDialog(
         context: context, 
@@ -156,10 +163,17 @@ class _EditNotePageState extends State<EditNotePage> {
       );
     }
     else {
-      MyNotesPage.noteToDisplay.setNoteTitle(_titleEditingController.text);
-      MyNotesPage.noteToDisplay.setNoteContent(_contentEditingController.text);
-      Navigator.pushReplacementNamed(context, "/displaynotepage");
+      notesBox.delete(notesBox.get(n).noteNumber);
+      Note noteToAdd = Note(_titleEditingController.text, _contentEditingController.text);
+      notesBox.put(noteToAdd.noteNumber,noteToAdd);
+      // notesBox.delete(notesBox.length - 1);
+      // MyNotesPage.noteToDisplay = Note(_titleEditingController.text, _contentEditingController.text);
+      // notesBox.add(MyNotesPage.noteToDisplay);
+      // MyNotesPage.noteToDisplay.setNoteTitle(_titleEditingController.text);
+      // MyNotesPage.noteToDisplay.setNoteContent(_contentEditingController.text);
+      dispose();
+      MyNotesPage.n = noteToAdd.noteNumber;
+      Navigator.pushReplacementNamed(context, "/displaynotepage", arguments: n);
     }
   }
-
 }

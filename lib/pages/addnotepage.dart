@@ -1,26 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/model/note.dart';
+import 'package:flutter_application_2/model/Note.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 
-import 'mynotespage.dart';
+// ignore: must_be_immutable
+class AddNotePage extends StatelessWidget {
+  AddNotePage({ Key? key }) : super(key: key);
 
-class AddNotePage extends StatefulWidget {
+  var notesBox = Hive.box('notes');
 
-  const AddNotePage({Key? key}) : super(key: key);
-
-  @override
-  State<AddNotePage> createState() => _AddNotePageState();
-}
-
-/// This is the private State class that goes with AddNotesPage.
-class _AddNotePageState extends State<AddNotePage> {
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();
 
-  @override
   void dispose() {
     _noteController.dispose();
     _titleController.dispose();
-    super.dispose();
   }
 
   @override
@@ -41,7 +35,7 @@ class _AddNotePageState extends State<AddNotePage> {
           trailing: IconButton(
             tooltip: "Save",
             icon: const Icon(Icons.save, color: Colors.black),
-            onPressed: _saveClicked,
+            onPressed: () {_saveClicked(context);},
             ),
           title: TextField(
             textAlign: TextAlign.center,
@@ -76,7 +70,7 @@ class _AddNotePageState extends State<AddNotePage> {
     );
   }
 
-  void _saveClicked(){
+  void _saveClicked(BuildContext context){
     if (_noteController.text == "" && _titleController.text == ""){
       showDialog(
         context: context, 
@@ -96,8 +90,10 @@ class _AddNotePageState extends State<AddNotePage> {
       );
     }
     else {
-      MyNotesPage.notes.add(Note(_titleController.text));
-      MyNotesPage.notes.last.setNoteContent(_noteController.text);
+      Note temp = Note(_titleController.text, _noteController.text);
+      notesBox.put(temp.noteNumber,temp);
+      // MyNotesPage.notes.add(Note(_titleController.text));
+      // MyNotesPage.notes.last.setNoteContent(_noteController.text);
       Navigator.pushReplacementNamed(context, "/mynotespage");
     }
   }

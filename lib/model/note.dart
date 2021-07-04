@@ -1,29 +1,41 @@
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'note.g.dart';
+
+@HiveType(typeId: 0)
 class Note {
 
+  @HiveField(0)
   String noteName = "";
+  @HiveField(1)
   String noteContent = "";
+  @HiveField(2)
   int noteNumber = 0;
   static int numberOfNotes = 0;
 
-  Note(this.noteName){
+  Note(this.noteName, this.noteContent){
     noteNumber = ++numberOfNotes;
-    print("Note  number " + noteNumber.toString() + " is created");
+    // ignore: avoid_print
+    print("Note " + noteName + " is created");
   }
 
-  void setNoteTitle(String title){
+  Note setNoteTitle(String title){
     noteName = title;
+    return this;
   }
 
-  void setNoteContent(String content){
+  Note setNoteContent(String content){
     noteContent = content;
+    return this;
   }
 
   bool hasTitle(){
-    return this.noteName != "";
+    return noteName != "";
   }
 
   bool hasContent(){
-    return this.noteContent != "";
+    return noteContent != "";
   }
 }
 

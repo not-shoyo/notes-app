@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/model/note.dart';
+import 'package:flutter_application_2/model/Note.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/adapters.dart';
 
-class MyNotesPage extends StatefulWidget {
 
-  static Set<Note> notes = {};
-  static Note noteToDisplay = Note("");
-
+class MyNotesPage extends StatelessWidget {
   const MyNotesPage({ Key? key }) : super(key: key);
 
-  @override
-  _MyNotesPageState createState() => _MyNotesPageState();
-}
+  static var notesBox = Hive.box('notes');
 
-class _MyNotesPageState extends State<MyNotesPage> {
+  static List<Note> notes = [];
+
+  static int n = 0;
+
+  static void initState(){
+    if (notesBox.isNotEmpty){
+      for (int i = 0; i < notesBox.length; ++i){
+        if (i >= notes.length){
+          notes.add(notesBox.getAt(notesBox.length - 1 - i));
+        }
+        else{
+          notes[i] = notesBox.getAt(notesBox.length - 1 - i);
+        }
+      }
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
+    initState();
     return Scaffold(
       backgroundColor: Colors.white12,
       appBar: AppBar(
@@ -23,7 +37,7 @@ class _MyNotesPageState extends State<MyNotesPage> {
         centerTitle: true,
       ),
       body: ListView.builder(
-        itemCount: Note.numberOfNotes * 2, 
+        itemCount: notes.length * 2, 
         itemBuilder: (context, i) {
           if (i.isOdd){
             return const Divider(thickness: 5.0,);
@@ -32,14 +46,14 @@ class _MyNotesPageState extends State<MyNotesPage> {
           return ListTile(
             leading: Padding(
               padding: const EdgeInsets.symmetric(vertical: 17.0, horizontal: 15.0),
-              child: Text(MyNotesPage.notes.elementAt(i~/2).noteNumber.toString()),
+              child: Text(((i~/2) + 1).toString()),
             ),
-            title: Text(MyNotesPage.notes.elementAt(i~/2).hasTitle() ? MyNotesPage.notes.elementAt(i~/2).noteName : "New Note"),
-            subtitle: Text(MyNotesPage.notes.elementAt(i~/2).hasContent() ? MyNotesPage.notes.elementAt(i~/2).noteContent.substring(0, (MyNotesPage.notes.elementAt(i~/2).noteContent.length > 10) ? 10 : MyNotesPage.notes.elementAt(i~/2).noteContent.length) + "..." : "No Content"),
+            title: Text(notes[i~/2].hasTitle() ? notes[i~/2].noteName : "New Note"),
+            subtitle: Text(notes[i~/2].hasContent() ? notes[i~/2].noteContent.substring(0, (notes[i~/2].noteContent.length > 10) ? 10 : notes[i~/2].noteContent.length) + "..." : "No Content"),
             hoverColor: Colors.grey[200],
             onTap: (){
               print("List tile tapped");
-              MyNotesPage.noteToDisplay = MyNotesPage.notes.elementAt(i~/2);
+              n = notes[i~/2].noteNumber;
               Navigator.pushReplacementNamed(context, "/displaynotepage");
             },
           );

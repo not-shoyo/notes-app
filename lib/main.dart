@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+import 'model/Note.dart';
 import 'pages/displaynotepage.dart';
 import 'pages/editnotepage.dart';
 import 'pages/addnotepage.dart';
 import 'pages/mynotespage.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(NoteAdapter());
+  await Hive.openBox('notes');
   runApp(const MyApp());
 }
 
@@ -19,9 +25,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: <String, WidgetBuilder> {
       '/mynotespage': (BuildContext context) => const MyNotesPage(),
-      '/addnotepage': (BuildContext context) => const AddNotePage(),
-      '/displaynotepage': (BuildContext context) => DisplayNotePage(),
-      '/editnotepage':(BuildContext context) => EditNotePage(),
+      '/addnotepage': (BuildContext context) => AddNotePage(),
+      '/displaynotepage': (BuildContext context) => DisplayNotePage(MyNotesPage.n),
+      '/editnotepage':(BuildContext context) => EditNotePage(MyNotesPage.n),
       },
       title: 'app tab',
       theme: ThemeData(
